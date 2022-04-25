@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const { Router } = require("express");
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 const router = new Router();
 
@@ -45,9 +46,20 @@ router.post("/signin", async (req, res) => {
       });
     }
 
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+      },
+      process.env.JWT_SEC,
+      { expiresIn: "2h" }
+    );
+
+    console.log(token);
+
     user.password = undefined;
 
-    return res.status(200).json(user);
+    res.status(200).json({ ...user._doc, token });
   } catch (e) {
     console.log(e);
     return res.status(400).send({ message: "Something went wrong, sorry" });
