@@ -33,18 +33,28 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User deleted");
-  } catch {
+  } catch (e) {
     res.status(500).json(e);
   }
 });
 
-// Get user by id
+// Get user by id route
 router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     user.password = undefined;
     res.status(200).json({ user });
-  } catch {
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
+// Get all users  route
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (e) {
     res.status(500).json(e);
   }
 });
