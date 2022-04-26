@@ -4,7 +4,8 @@ const { default: mongoose } = require("mongoose");
 const DATABASE = process.env.DATABASE;
 const PORT = process.env.PORT || 4000;
 const authRouter = require("./routes/auth");
-const userRoute = require("./routes/user");
+const userRouter = require("./routes/user");
+const productRouter = require("./routes/product");
 
 // Create an express app
 const app = express();
@@ -29,7 +30,8 @@ app.use(bodyParserMiddleWare);
  **/
 
 app.use("/auth", authRouter);
-app.use("/users", userRoute);
+app.use("/users", userRouter);
+app.use("/products", productRouter);
 
 app.listen(PORT, () => {
   console.log(`App is listening on PORT ${PORT}`);
