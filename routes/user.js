@@ -38,4 +38,15 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
+// Get user by id
+router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    user.password = undefined;
+    res.status(200).json({ user });
+  } catch {
+    res.status(500).json(e);
+  }
+});
+
 module.exports = router;
