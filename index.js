@@ -7,6 +7,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const cartRouter = require("./routes/cart");
+const stripeRouter = require("./routes/stripe");
 const corsMiddleWare = require("cors");
 
 // Create an express app
@@ -36,6 +37,7 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/cart", cartRouter);
+app.use("/", stripeRouter);
 
 app.listen(PORT, () => {
   console.log(`App is listening on PORT ${PORT}`);
