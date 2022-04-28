@@ -57,7 +57,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Get all products route
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json({ products });
